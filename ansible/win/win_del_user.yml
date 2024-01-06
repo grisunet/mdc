@@ -1,0 +1,17 @@
+---
+- name: windows user del
+  hosts: windows
+  vars:
+    usr_name: 'karim'
+    usr_fullname: 'Sepp Depp'
+    usr_password: 'test01'
+    usr_groups: "Benutzer"
+  tasks:
+    - name: delete local user
+      ansible.windows.win_user:
+        name: "{{ usr_name }}"
+        password: "{{ usr_password }}"
+        groups: "{{ usr_groups }}"
+        update_password: on_create
+        password_expired: true
+        state: absent  

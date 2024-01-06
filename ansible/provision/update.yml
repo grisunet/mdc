@@ -1,0 +1,14 @@
+- hosts: vbox
+  become: true
+  tasks:
+  - name: Update apt packages
+    apt:
+      upgrade: no
+      update_cache: yes
+      cache_valid_time: 86400 
+  - register: results
+   - debug:
+       var: results.stdout   
+
+
+

@@ -1,0 +1,31 @@
+---
+
+- name: Install Apache
+  apt:
+    name:
+      - "{{ debian_webserver }}"
+      - "{{ nettools }}"
+    state: latest
+  when: ansible_os_family == "Debian"
+
+- name: Install Apache
+  dnf:
+    name:
+      - "{{ nettools }}"
+      - "{{ redhat_webserver }}"
+    state: latest
+  when: ansible_os_family == "RedHat"
+
+- name: Enable service httpd and ensure it is not masked
+  ansible.builtin.systemd:
+    name: httpd.service
+    enabled: true
+    masked: no
+  when: ansible_os_family == "RedHat"
+
+- name: Enable service apache2 and ensure it is not masked
+  ansible.builtin.systemd:
+    name: apache2.service
+    enabled: true
+    masked: no
+  when: ansible_os_family == "Debian"

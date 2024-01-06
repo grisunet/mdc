@@ -1,0 +1,4 @@
+  options: -cc
+  device: /dev/vdb
+  fs: ext4 
+

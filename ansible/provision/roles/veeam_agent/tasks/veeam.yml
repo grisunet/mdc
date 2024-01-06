@@ -1,0 +1,5 @@
+---
+
+- name install deb
+  ansible.builtin.apt:
+  ¦ deb: /home/ubuntu/veeam-release-deb_1.0.8_amd64.deb

@@ -1,0 +1,17 @@
+---
+- name: win_powershell module demo
+  hosts: windows
+  vars:
+    #mydir: 'C:\Users\khg\Desktop\test'
+  tasks:
+    - name: Run PowerShell script in PowerShell 7
+      ansible.windows.win_powershell:
+        script: |
+          $PSVersionTable.PSVersion.Major
+        executable: pwsh.exe
+        arguments:
+        - -ExecutionPolicy
+        - ByPass
+      register: pwsh_output
+      failed_when:
+      - pwsh_output.output[0] != 7

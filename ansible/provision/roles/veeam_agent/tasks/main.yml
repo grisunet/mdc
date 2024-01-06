@@ -1,0 +1,8 @@
+---
+## install veeam agent to remote hosts ## 
+
+- name: copy veeam agent package
+  ansible.builtin.copy:
+    src: /home/khg/projekte/ansible/provision/roles/veeam_agent/files/veeam-release-deb_1.0.8_amd64.deb  
+    dest: /home/khg/
+

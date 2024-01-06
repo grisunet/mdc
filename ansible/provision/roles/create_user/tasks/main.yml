@@ -1,0 +1,15 @@
+---
+## Create users ##
+- name: Creating users
+  user:
+    name: '{{ user_name }}'
+    create_home: '{{ createhome | default("yes") }}'
+    group: "{{ group }}"  
+    state: '{{ state | default("present") }}'  
+    home: "{{ home }}"
+    comment: '{{ comment | default("Ansible created comment") }}'  
+    shell: '{{ shell | default("/bin/bash") }}'
+    password: "{{ password | password_hash('sha512') }}"
+      #with_items: "{{ users }}"
+
+

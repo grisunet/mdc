@@ -1,0 +1,54 @@
+---
+    - name: Update repo and collect updates
+      apt:
+        upgrade: yes
+        update_cache: yes
+        cache_valid_time: 86400 #one Day
+       
+    - name: Register upgrade_date
+      shell: date +"%Y/%m"
+      register: upgrade_date      
+
+    - name: Register forward_date
+      shell: date -d 'next tuesday' '+%d.%m.%Y'
+      register: forward_date
+
+    - name: Get the total amount of updates remaining 
+      shell: apt list --upgradable | awk 'BEGIN{FS="/"} {print $1}'
+      register: updates_result
+
+    - name: Create local file
+      ansible.builtin.file:
+        path: "/home/khg/av_updates.txt"
+        state: touch  
+        mode: '0544'
+        
+    - name: Print output to file
+      ansible.builtin.copy:
+        content: "{{updates_result.stdout}}"
+        dest: /home/khg/av_updates.txt
+    
+    - name: Send e-mail to Company Name 
+      community.general.mail:
+        host: "{{smtp_server}}"
+        port: "{{smtp_port}}" 
+        username: "{{smtp_user}}"
+        password: "{{smtp_pass}}"
+        to: "{{addressees[0]}}"
+        subject: ANSIBLE Test-Server update 
+        subtype: html  
+        body: "{{ lookup('template', 'email.j2') }}"
+        from: "{{smtp_user}}"
+        secure: try  
+        attach:
+        - /home/khg/av_updates.txt
+
+    - name: Reboot Server
+      ansible.builtin.reboot:
+        reboot_timeout: 90
+        msg: "Rebooting Server in 5 seconds"
+
+    - name: check Services
+      ansible.builtin.systemd
+           
+      

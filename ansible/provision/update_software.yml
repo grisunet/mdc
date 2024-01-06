@@ -1,0 +1,23 @@
+---
+  tasks:
+  - name: Install Apache
+    dnf:
+      name:
+        - httpd
+        - ntpstat
+      state: latest
+    when: ansible_os_family == "RedHat"
+
+  - name: Install Audacity
+    apt:
+      name:
+        - audacity
+      state: latest
+    when: ansible_os_family == "Debian"
+
+  - name: Install Easytag
+  ¦ apt:
+  ¦ ¦ name:
+    - easytag
+  ¦ ¦ state: latest
+  ¦ when: ansible_os_family == "Debian"

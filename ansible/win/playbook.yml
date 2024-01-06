@@ -1,0 +1,6 @@
+---
+- hosts: windows
+  gather_facts: yes
+    #become: true
+  roles:
+    - add_user

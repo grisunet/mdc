@@ -1,0 +1,10 @@
+---
+- name: Add or update registry path MyCompany, with entry 'hello', and containing 'world'
+  hosts: windows
+  tasks:
+    - name:  Add a key
+      win_regedit:
+        path: HKCU:\Software\kgtec
+        name: Hello
+        data: world
+

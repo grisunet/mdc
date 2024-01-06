@@ -1,0 +1,9 @@
+  user: Create a login user
+  comment: "Created by ansible"  
+  home: /home/test2
+  shell: /bin/bash
+  password: Start#123
+  group: test1
+  state: present
+  user_name: test2 
+

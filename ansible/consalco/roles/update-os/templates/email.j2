@@ -1,0 +1,41 @@
+<html>
+
+<body>
+Sehr geehrte Damen und Herren, <br>
+hier die Informationen zu dem Update 2023/11 <br>
+
+<br>
+{% for host in ansible_play_hosts_all %}
+        <tr>
+            <td>{{ hostvars[host].inventory_hostname }}</td>
+            <td>{{ hostvars[host].updates_result.stdout_lines | d('No result') }}</td>
+        </tr>
+        {% endfor %}
+<br>
+<br
+<strong> Bemerkungen zu den Updates </strong> <br>
+<br>
+<br>
+<li><strong>Zeitplan</strong></li><br>
+<br>
+</p>
+<ol>
+<li>16:00 – Erstellung des Snapshots</li> <br>
+<li>16:10 – Update, anschließend Reboot und prüfen ob die Services alle wieder verfügbar sind.</li> <br>
+<li>16:30 – Arbeiten beendet </li>
+</ol>
+<br>
+<li><strong>Nächste Schritte</strong></li> <br>
+Test der Applikation durch Orange Hive  <br>
+<br>
+<li><strong>Entfernung der Snapshots</strong></li> <br>
+Am {{ forward_date.stdout }} im Laufe des Tages, falls keine Probleme auftreten. <br>
+<br>
+Mit freundlichen Grüßen<br>
+<br>
+<strong>consalco. PCS Team</strong> 
+<br>
+</p>
+
+</body>
+</html>

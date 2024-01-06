@@ -1,0 +1,6 @@
+---
+- hosts: vbox
+  gather_facts: true
+  become: true
+  tasks:
+   - command: apt list --upgradable | awk  'BEGIN { FS = "/" } ; {print $1}' 

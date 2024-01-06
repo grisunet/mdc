@@ -1,0 +1,74 @@
+- hosts: vbox
+  become: true
+  become_user: root
+  tasks:
+    - name: Update repo and collect updates
+      apt:
+        upgrade: no
+        update_cache: yes
+        cache_valid_time: 900 #15 Minutes
+       
+    - name: Register upgrade_date
+      shell: date +"%Y/%m"
+      register: upgrade_date      
+
+    - name: Register forward_date
+      shell: date -d 'next tuesday' '+%Y/%m/%d'
+      register: forward_date
+
+    - name: show installable packets
+      shell: apt list updates | grep '^.'
+      register: updates_result
+      
+
+    - name: Create local file
+      ansible.builtin.file:
+        path: "/home/khg/av_updates.txt"
+        state: touch  
+        mode: '0544'
+        
+    #- name: Print output to file
+    #  ansible.builtin.copy:
+    #    content: "{{command_output.stdout}}"
+    #    dest: /home/khg/av_updates.txt
+
+    - name: Send e-mail to Company Name 
+      community.general.mail:
+        host: smtp.office365.com
+        port: 587 
+        username: svc.smtp@consalco.com
+        password: C0nMail!
+        to:
+        - khg@kgtec.de
+        - karlheinz.greppmair@consalco.com  
+        #- bernd.driegert@consalco.com  
+          
+        subject: ANSIBLE Test-Server update 
+        subtype: html  
+        body: Sehr geehrte Damen und Herren,<br> 
+              hier die Informationen zu dem Update {{ upgrade_date.stdout }} – Testserver im Anhang. <br>
+              <br>
+              
+              <br>
+              <b>Bemerkungen zu den Updates</b> <br>
+              <br>
+               <b>Zeitplan</b> <br>
+               16:00 – Erstellung des Snapshots <br>
+               16:10 – Update, anschließend Reboot und prüfen ob die Services alle wieder verfügbar sind. <br>
+               16:30 – Arbeiten beendet (vor.) <br>
+               <br>
+               <b>Nächste Schritte</b> <br>
+               Test der Applikation durch Orange Hive <br>
+               <br>
+               <b>Entfernung der Snapshots</b> <br>
+               Am {{ forward_date.stdout }} im Laufe des Tages, falls keine Probleme auftreten. <br>
+               <br>
+               Mit freundlichen Grüßen <br>
+               <br>
+               <b>consalco. PCS Team </b> <br>
+
+        from: svc.smtp@consalco.com
+        secure: try  
+        
+
+    

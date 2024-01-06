@@ -1,0 +1,35 @@
+---
+
+- name: Create a new primary partition with a size of 10GiB
+  community.general.parted:
+    device: /dev/vdb
+    number: 1
+    state: present
+    part_end: 4GiB
+
+
+## Create filesystem ##
+- name: Create a ext4 filesystem on /dev/sdb1 and check disk blocks
+  filesystem:
+    fstype: ext4
+    dev: /dev/vdb1
+    opts: -cc 
+
+- name: Get UUID of disks
+  shell: blkid {{ UUID_loop }} -s UUID -o value
+  loop:
+    - /dev/vdb1
+  loop_control:
+    loop_var: UUID_loop
+  register: UUID
+- set_fact:
+    UUID_block: "{{ UUID.results | map(attribute='stdout') | join('\n') }}"
+- set_fact:
+    UUID_split: "{{ UUID_block.split(' ')[0:] }}"
+
+- name: Mount Disks
+  mount:
+    path: /mnt/test
+    src: UUID={{ UUID_split }}
+    fstype: ext4
+    state: present

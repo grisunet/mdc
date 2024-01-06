@@ -1,0 +1,12 @@
+---
+- hosts: all
+  gather_facts: true
+  become: yes
+  tasks:
+    - name: Install Apache
+      apt:
+        state: absent
+        name:
+          - apache2
+          - systemd-timesyncd 
+      when: ansible_os_family == "Debian"

@@ -1,0 +1,17 @@
+---
+- name: windows user add
+  hosts: windows
+  vars:
+    usr_name: 'karim'
+    usr_fullname: 'Karim Hannah'
+    usr_password: 'test01'
+    usr_groups: "Benutzer"
+  tasks:
+    - name: create local user
+      ansible.windows.win_user:
+        name: "{{ usr_name }}"
+        password: "{{ usr_password }}"
+        groups: "{{ usr_groups }}"
+        update_password: on_create
+        password_expired: true
+        state: present  

@@ -1,0 +1,9 @@
+## Create users ##
+- name: create local user
+  ansible.windows.win_user:
+    name: "{{ usr_name }}"
+    password: "{{ item.usr_password }}"
+    groups: "{{ item.usr_groups }}"
+    update_password: on_create
+    password_expired: true
+    state: present

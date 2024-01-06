@@ -1,0 +1,30 @@
+---
+
+  - name: Install s3fs 
+    apt:
+      name: 
+      - s3fs
+      state: present     
+    when: ansible_os_family == "Debian"    
+
+  - name: Copy s3 passwd file with owner and permission
+    copy:
+      src: /home/khg/.passwd-s3fs
+      dest: /home/khg/.passwd-s3fs
+      owner: khg
+      group: khg
+      mode: '0600' 
+      force: no  
+
+  - name: Create a mountpoint if it does not exist
+    file:
+      path: /home/khg/s3dir
+      state: directory
+      owner: khg
+      group: khg  
+      mode: '0755'  
+
+  - name:  mount wasabi bucket
+    shell:
+      " s3fs galljo /home/khg/s3dir -o passwd_file=${HOME}/.passwd-s3fs -o url=https://s3.eu-central-2.wasabisys.com "
+    register: s3  

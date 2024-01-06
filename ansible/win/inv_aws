@@ -1,0 +1,17 @@
+
+[debian]
+deb11
+
+[redhat]
+alma1
+
+[windows]
+35.156.224.130
+
+[windows:vars]
+ansible_user=ansible
+ansible_password=Arlington01
+ansible_port=5986
+ansible_connection=winrm
+ansible_winrm_transport=basic
+ansible_winrm_server_cert_validation=ignore

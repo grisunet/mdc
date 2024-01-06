@@ -1,0 +1,5 @@
+win_users:
+- usr_name: test1
+  usr_fullname: 'Sepp Depp'
+  usr_password: test1 
+  usr_groups: "Benutzer"

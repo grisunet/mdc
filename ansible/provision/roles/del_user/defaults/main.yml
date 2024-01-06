@@ -1,0 +1,10 @@
+users:
+- name: test1
+  comment: ""
+  home: /home/test
+  shell: /bin/bash
+  password: test3 
+  group:  test2
+  remove: yes  
+  state: absent
+

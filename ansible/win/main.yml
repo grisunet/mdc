@@ -1,0 +1,15 @@
+---
+
+- name: Test
+
+hosts: all
+
+tasks:
+
+- name: Get WinRM Config
+
+win_shell: winrm get winrm/config/service
+
+register: output
+
+- debug: var=output.stdout_lines

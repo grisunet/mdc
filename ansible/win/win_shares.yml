@@ -1,0 +1,13 @@
+---
+- name: win_share module demo
+  hosts: windows
+  vars:
+    #mydir: 'C:\Users\khg\Desktop\test'
+  tasks:
+    - name: Add secret share
+      ansible.windows.win_share:
+        name: internal
+        description: top secret share
+        path: C:\internal
+        list: no
+        full: khg

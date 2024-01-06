@@ -1,0 +1,6 @@
+---
+## install veeam agent ##
+- name: Install Veeam Agent
+  command: apt install /home/khg/veeam-release-deb_1.0.8_amd64.deb -y --allow-downgrades
+
+
