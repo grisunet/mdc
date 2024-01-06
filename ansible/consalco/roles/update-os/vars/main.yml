@@ -1,9 +1,9 @@
 ---
 
-smtp_server: smtp.office365.com
+smtp_server: smtp.server
 smtp_port: 587
-smtp_user: svc.smtp@consalco.com
-smtp_pass: C0nMail!
+smtp_user: smtp_user
+smtp_pass: passwd
 addressees:
   - khg@kgtec.de
   - karlheinz.greppmair@consalco.com
